@@ -1,0 +1,7 @@
+.Bookshelf {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  row-gap: 1rem;
+}

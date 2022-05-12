@@ -1,0 +1,25 @@
+.BookCard {
+  text-align: center;
+  background: transparent;
+}
+
+.BookCard__img {
+  width: 10rem;
+  height: auto;
+}
+
+.BookCard__title {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.BookCard__author {
+  font-size: 1.4rem;
+  font-weight: 400;
+}
+
+.BookCard__info {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
