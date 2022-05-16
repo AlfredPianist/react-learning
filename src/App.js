@@ -33,14 +33,11 @@ const App = () => {
   };
 
   const updateBook = (newBook) => {
-    const index = books.findIndex((book) => book.name === newBook.name);
-    if (index >= 0) {
-      const nextBooks = [...booksInitial];
-      nextBooks[index] = newBook;
-      setBooks(nextBooks);
-    } else {
-      handleAddBook(newBook);
-    }
+    const index = books.findIndex((book) => book.id === newBook.id);
+    if (index < 0) return;
+    const nextBooks = [...booksInitial];
+    nextBooks[index] = newBook;
+    setBooks(nextBooks);
   };
 
   const deleteBook = (queryBook) => {
@@ -60,7 +57,7 @@ const App = () => {
       <input type="text" onChange={handleSearchBook} value={query} />
       <AddBookForm onAdd={handleAddBook} />
 
-      <Bookshelf books={activeBooks} />
+      <Bookshelf books={activeBooks} onUpdate={updateBook} />
     </div>
   );
 };

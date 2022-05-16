@@ -2,8 +2,8 @@ import css from "./BookCard.module.css";
 import { useState } from "react";
 import InlineInput from "./InlineInput";
 
-const BookCard = (book) => {
-  const { id, img, title, author, onUpdate } = book;
+const BookCard = (props) => {
+  const { id, img, title, author, onUpdate } = props;
   const [isEditing, setIsEditing] = useState({
     editTitle: false,
     editAuthor: false,
@@ -20,12 +20,17 @@ const BookCard = (book) => {
     });
     if (isEditing[event.target.name] === true) {
       const newField = event.target.name.match(/[A-Z].*$/)[0].toLowerCase();
-      book = {
-        ...book,
+      const nextBook = {
+        id,
+        img,
+        title,
+        author,
         [newField]: field[newField],
       };
+      onUpdate(nextBook);
     }
   };
+
   const handleChange = (event) => {
     setField({
       ...field,
