@@ -1,6 +1,6 @@
 import React from "react";
 
-const InlineInput = ({ type, name, value, isEditing, onChange }) =>
+const InlineInput = ({ type, name, value, isEditing, onChange }) => {
   if (!isEditing) {
     return value;
   }
