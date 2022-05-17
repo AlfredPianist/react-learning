@@ -1,71 +1,43 @@
 import css from "./BookCard.module.css";
-import { useState } from "react";
 import InlineInput from "./InlineInput";
 
 const BookCard = (props) => {
-  const { id, img, title, author, onUpdate } = props;
-  const [isEditing, setIsEditing] = useState({
-    editTitle: false,
-    editAuthor: false,
-  });
-  const [field, setField] = useState({
-    title: title,
-    author: author,
-  });
+  const { book, onUpdate, onDelete } = props;
+  const { id, title, author, img } = book;
 
-  const handleClick = (event) => {
-    setIsEditing({
-      ...isEditing,
-      [event.target.name]: !isEditing[event.target.name],
-    });
-    if (isEditing[event.target.name] === true) {
-      const newField = event.target.name.match(/[A-Z].*$/)[0].toLowerCase();
-      const nextBook = {
-        id,
-        img,
-        title,
-        author,
-        [newField]: field[newField],
-      };
-      onUpdate(nextBook);
-    }
+  const handleDelete = () => {
+    onDelete(book);
   };
 
-  const handleChange = (event) => {
-    setField({
-      ...field,
-      [event.target.name]: event.target.value,
-    });
+  const handleChange = (name) => (nextValue) => {
+    const nextBook = {
+      ...book,
+      [name]: nextValue,
+    };
+    onUpdate(nextBook);
   };
 
   return (
     <div className={css.component}>
       <img className={css.img} alt={title + " book cover"} src={img} />
+      <button onClick={handleDelete}>Delete</button>
       <ul className={css.info}>
         <li className={css.id}>{id}</li>
         <li className={css.title}>
           <InlineInput
             type="text"
             name="title"
-            value={field.title}
-            isEditing={isEditing["editTitle"]}
-            onChange={handleChange}
+            value={title}
+            onChange={handleChange("title")}
           />
-          <button name="editTitle" onClick={handleClick}>
-            Edit
-          </button>
         </li>
         <li className={css.author}>
           <InlineInput
             type="text"
             name="author"
-            value={field.author}
-            isEditing={isEditing["editAuthor"]}
-            onChange={handleChange}
+            value={author}
+            onChange={handleChange("author")}
           />
-          <button name="editAuthor" onClick={handleClick}>
-            Edit
-          </button>
         </li>
       </ul>
     </div>

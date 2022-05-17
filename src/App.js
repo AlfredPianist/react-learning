@@ -30,34 +30,35 @@ const App = () => {
   const handleAddBook = (newBook) => {
     const nextBooks = [...books, newBook];
     setBooks(nextBooks);
+
+    // What was this?
+    // setBooks((previousBooks) => {
+    //   return [...previousB  books, newBook]
+    // })
   };
 
-  const updateBook = (newBook) => {
+  const handleUpdateBook = (newBook) => {
     const index = books.findIndex((book) => book.id === newBook.id);
     if (index < 0) return;
-    const nextBooks = [...booksInitial];
+    const nextBooks = [...books];
     nextBooks[index] = newBook;
     setBooks(nextBooks);
   };
 
-  const deleteBook = (queryBook) => {
-    const index = booksInitial.findIndex(
-      (book) => book.name === queryBook.name
-    );
-    if (index >= 0) {
-      const nextBooks = booksInitial.filter(
-        (book) => book.name !== queryBook.name
-      );
-      setBooks(nextBooks);
-    }
+  const handleDeleteBook = (queryBook) => {
+    const nextBooks = books.filter((book) => book.id !== queryBook.id);
+    setBooks(nextBooks);
   };
 
   return (
     <div className={css.component}>
       <input type="text" onChange={handleSearchBook} value={query} />
       <AddBookForm onAdd={handleAddBook} />
-
-      <Bookshelf books={activeBooks} onUpdate={updateBook} />
+      <Bookshelf
+        books={activeBooks}
+        onUpdate={handleUpdateBook}
+        onDelete={handleDeleteBook}
+      />
     </div>
   );
 };

@@ -1,11 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 
-const InlineInput = ({ type, name, value, isEditing, onChange }) => {
+const InlineInput = ({ type, name, value: initialValue, onChange }) => {
+  const [value, setValue] = useState(initialValue);
+  const [isEditing, setIsEditing] = useState(false);
+
+  const handleChange = (event) => {
+    setValue(event.target.value);
+  };
+
+  const handleClick = () => {
+    if (isEditing) {
+      onChange(value);
+    }
+    setValue(value);
+    setIsEditing(!isEditing);
+  };
+
+  let element = null;
   if (!isEditing) {
-    return value;
+    element = value;
+  } else {
+    element = (
+      <input type={type} value={value} name={name} onChange={handleChange} />
+    );
   }
 
-  return <input type={type} value={value} name={name} onChange={onChange} />;
+  return (
+    <>
+      {element}
+      <button name="editTitle" onClick={handleClick}>
+        Edit
+      </button>
+    </>
+  );
 };
 
 export default InlineInput;
